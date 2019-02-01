@@ -127,7 +127,7 @@ rdssl_cert_read(uint8 * data, uint32 len)
 	if ((ret = gnutls_x509_crt_init(cert)) != GNUTLS_E_SUCCESS) {
 		logger(Protocol, Error, "%s:%s:%d: Failed to init certificate structure. GnuTLS error = 0x%02x (%s)\n",
 				__FILE__, __func__, __LINE__, ret, gnutls_strerror(ret));
-
+		free(cert);
 		return NULL;
 	}
 
@@ -137,6 +137,7 @@ rdssl_cert_read(uint8 * data, uint32 len)
 	if ((ret = gnutls_x509_crt_import(*cert, &cert_data, GNUTLS_X509_FMT_DER)) != GNUTLS_E_SUCCESS) {
 		logger(Protocol, Error, "%s:%s:%d: Failed to import DER encoded certificate. GnuTLS error = 0x%02x (%s)\n",
 				__FILE__, __func__, __LINE__, ret, gnutls_strerror(ret));
+		free(cert);
 		return NULL;
 	}
 
