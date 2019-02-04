@@ -216,6 +216,8 @@ int write_pkcs1_der_pubkey(const gnutls_datum_t *m, const gnutls_datum_t *e, uin
 		return 1;
 	}
 
+	asn1_delete_structure(&asn_cert);
+
 	return 0;
 }
 
@@ -250,6 +252,8 @@ int libtasn_read_cert_pk_oid(uint8_t *data, size_t len, char *oid, size_t *oid_s
 				__FILE__, __func__, __LINE__, asn1_rv, asn1_strerror(asn1_rv));
 		return 1;
 	}
+
+	asn1_delete_structure(&asn_cert);
 
 	return 0;
 }
@@ -287,6 +291,8 @@ int libtasn_read_cert_pk_parameters(uint8_t *data, size_t len, gnutls_datum_t *m
 				__FILE__, __func__, __LINE__, asn1_rv, asn1_strerror(asn1_rv));
 		return 1;
 	}
+
+	asn1_delete_structure(&asn_cert);
 
 	if (ASN1_SUCCESS != (asn1_rv = asn1_create_element(*asn_defs, "PKIX1Implicit88.RSAPublicKey", &asn_key))) {
 		logger(Core, Error, "%s:%s:%d Failed to create ASN.1 parser element. Error = 0x%x (%s)\n",
@@ -326,6 +332,8 @@ int libtasn_read_cert_pk_parameters(uint8_t *data, size_t len, gnutls_datum_t *m
 				__FILE__, __func__, __LINE__, asn1_rv, asn1_strerror(asn1_rv));
 		return 1;
 	}
+
+	asn1_delete_structure(&asn_key);
 
 	e->size = nblen;
 

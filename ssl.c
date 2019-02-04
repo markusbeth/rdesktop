@@ -251,6 +251,9 @@ rdssl_cert_to_rkey(RDSSL_CERT * cert, uint32 * key_len)
 	mpz_import(pkey->n, m.size, 1, sizeof(m.data[0]), 0, 0, m.data);
 	mpz_import(pkey->e, e.size, 1, sizeof(e.data[0]), 0, 0, e.data);
 
+	free(m.data);
+	free(e.data);
+
 	rsa_public_key_prepare(pkey);
 
 	*key_len = pkey->size;
