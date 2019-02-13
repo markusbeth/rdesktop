@@ -232,6 +232,7 @@ rdpdr_send_client_name_request(void)
 	out_uint32_le(s, 0);	/* CodePage */
 	out_uint32_le(s, s_length(&name));	/* ComputerNameLen */
 	out_stream(s, &name);
+	xfree(name.data);
 	s_mark_end(s);
 	channel_send(s, rdpdr_channel);
 	s_free(s);
